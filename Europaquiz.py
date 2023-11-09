@@ -1,14 +1,6 @@
-from cairosvg import svg2png
-from PIL import Image
+from gpanel import *
 
-# Pfad zur Vektorgrafik (SVG)
-svg_file = 'EuropaleereKarte.svg'  # Ersetze 'deine_vektorgrafik.svg' durch den Dateinamen deiner Vektorgrafik
-
-# Konvertiere die Vektorgrafik in ein Rasterbild (PNG)
-png_data = svg2png(url=svg_file)
-with open('temp.png', 'wb') as f:
-    f.write(png_data)
-
-# Öffne und zeige das Rasterbild mit Pillow
-image = Image.open('temp.png')
-image.show()
+makeGPanel()
+img = getImage("https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Europa.svg/2560px-Europa.svg.png")
+print (imageWidth("https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Europa.svg/2560px-Europa.svg.png"))
+image("https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Europa.svg/2560px-Europa.svg.png", 0, 0)
