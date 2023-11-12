@@ -1,6 +1,13 @@
-from gpanel import *
+from matplotlib import pyplot as plt
+from matplotlib import image as mpimg
+ 
+plt.title("Hauptstädtequiz")
+ 
+image = mpimg.imread("EuropaleereKarte.png")
+plt.imshow(image)
 
-makeGPanel()
-img = getImage("https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Europa.svg/2560px-Europa.svg.png")
-print (imageWidth("https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Europa.svg/2560px-Europa.svg.png"))
-image("https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Europa.svg/2560px-Europa.svg.png", 0, 0)
+ax = plt.gca()
+ax.get_xaxis().set_visible(False)
+ax.get_yaxis().set_visible(False)
+
+plt.show()
