@@ -1,4 +1,4 @@
-#Modifizierter und ausgebauter Code aus Basis von tutorialspoint.com
+#Modifizierter und ausgebauter Code auf Basis von tutorialspoint.com
 #Original: https://www.tutorialspoint.com/return-the-input-of-the-entry-widget-in-tkinter
 
 import tkinter as tk
@@ -8,19 +8,25 @@ from tkinter import *
 
 #Nachfolgend wird ein Fenster erzeugt, in welchem eine Eingabe stattfinden kann
 win = Tk()
+win.title("Europaquiz")
 win.geometry("700x250")
 
-def get_data():
-   label.config(text= entry.get(), font= ('Helvetica 13'))
+#Textrückgabe des Eingabefelds
+def userInput():
+    p = entry.get()
+    print (p)
 
-entry = Entry(win, width= 42)
-entry.place(relx= .5, rely= .5, anchor= CENTER)
+#Eingabefeld
+entry = Entry(win, width = 42)
+entry.place(anchor = CENTER)
+entry.pack()
 
-label= Label(win, text="", font=('Helvetica 13'))
-label.pack()
-
+#Feldtitel
+label= Label(win, text="Hauptstädtequiz Europa").pack()
 tk.Label(win, text="Hauptstadt von <>").pack()
-tk.Button(win, text= "Absenden", command= get_data).place(relx= .7, rely= .5, anchor= CENTER)
+
+#Button
+tk.Button(win, text= "Absenden", command = userInput).place(relx= .7, rely= .5, anchor= CENTER)
 
 win.mainloop()
 
