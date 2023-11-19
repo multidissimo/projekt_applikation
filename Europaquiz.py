@@ -1,65 +1,96 @@
+#TODOs
+#Daten Liste vervollständigen
+#Bereits abgefragte, richtige Länder in neue Liste übertragen, um Wiederholungen zu Vermeiden
+#Bereits abgefragte, falsche Länder in neue Liste übertragen und am Ende wiederholen lassen
+#Wenn die "falsche Liste" leer und die "richtige Liste" voll sind, "Gratulation!" oder so anzeigen
+
 import tkinter as tk
 from tkinter import *
 from PIL import ImageTk, Image
 from random import randrange
 
 #Liste mit allen Daten (Kürzel, Name, Hauptstadt)
-daten = [["ch","Schweiz","Bern"],["DEU","Deutschland","Berlin"],["BE","Belgien","Brüssel"]]
+daten = [["ch","Schweiz","Bern"],["deu","Deutschland","Berlin"],["be","Belgien","Brüssel"]]
 
-def start(aktuell, stadt, land):
-    tk.Label(win, text="Hauptstadt von " + land).pack()
-    userInput(aktuell, stadt)
+#Liste für Speicherung des aktuellen Spielstands
+ebenen = []
 
 #Zufällige Auswahl
 def auswahl():
+    global aktuell
+
     aktuell = randrange(len(daten))
     land = daten[aktuell][1]
     stadt = daten[aktuell][2]
 
-#Textrückgabe des Eingabefelds
-def userInput(aktuell, stadt):
-    p = entry.get()
+    #Anzeige aktualisieren
+    frage.config(text="Hauptstadt von " + land)
 
-    if p == stadt:
-        pasten = Image.open(daten[aktuell][0]+"_g.png").resize((400, 400), Image.LANCZOS)
-    else:
-        pasten = Image.open(daten[aktuell][0]+"_r.png").resize((400, 400), Image.LANCZOS)
-
-    # Erstelle ein neues Bild als Kopie von img_bottom
-    combined_img = pasten.copy()
-
-    # Füge das obere Bild auf das untere Bild ein
-    #combined_img.paste(img_top, (0, 0), img_top)
-
-    # Aktualisiere das Bild im Label
-    img_combined = ImageTk.PhotoImage(combined_img)
+    #Aktualisiere das Bild im Label
+    img_combined = ImageTk.PhotoImage(update())
     image_label.config(image=img_combined)
     image_label.image = img_combined
 
-    print(p)
+#Überprüfung der Eingabe
+def check():
+    global ebenen
 
-# Nachfolgend wird ein Fenster erzeugt, in welchem eine Eingabe stattfinden kann
+    #Text aus Eingabefeld auslesen
+    p = entry.get()
+    #Lösung aus Liste auslesen
+    stadt = daten[aktuell][2]
+
+    #Überprüfung ob Eingabe korrekt ist (Ja = grüne Ebene / Nein = rote Ebene)
+    if p == stadt:
+        ebene = Image.open(daten[aktuell][0]+"_g.png").resize((400, 400), Image.LANCZOS)
+    else:
+        ebene = Image.open(daten[aktuell][0]+"_r.png").resize((400, 400), Image.LANCZOS)
+
+    #Ebene in Liste speichern
+    ebenen.append(ebene)
+
+    #Neue Aufgabe generieren
+    auswahl()
+
+    #Kontrollen
+    print(p)
+    print(ebenen)
+
+#Spielstand aktualisieren
+def update():
+    spielstand = Image.open("EuropaleereKarte.png").resize((400, 400), Image.LANCZOS)
+
+    #Alle Ebenen aus Liste übereinanderlegen
+    for ebene in ebenen:
+        spielstand.paste(ebene, (0, 0), ebene)
+
+    #Übereinandergelegtes Bild zurückgeben
+    return spielstand
+
+#Grundfunktionen / Setup
+
+#Fenster
 win = Tk()
 win.title("Europaquiz")
 win.geometry("800x600")
 
-#Initialisiere das Label für das Bild
-img = ImageTk.PhotoImage(Image.open("EuropaleereKarte.png").resize((400, 400), Image.LANCZOS))
-image_label = tk.Label(win, image=img)
-image_label.place(relx=.5, rely=.5, anchor=tk.CENTER)
-
-aktuell = randrange(len(daten))
-land = daten[aktuell][1]
-stadt = daten[aktuell][2]
-
-tk.Label(win, text="Hauptstädtequiz Europa").pack()
-tk.Label(win, text="Hauptstadt von " + land).pack()
+#Label für die Frage
+frage = tk.Label(win)
+frage.pack()
 
 #Eingabefeld
 entry = Entry(win, width=30)
-entry.place(relx=.5, rely=.13, anchor=CENTER)
+entry.place(relx=.5, rely=.1, anchor=CENTER)
+
+#Label für das Bild
+img_combined = ImageTk.PhotoImage(update())
+image_label = tk.Label(win, image=img_combined)
+image_label.place(relx=.5, rely=.5, anchor=tk.CENTER)
 
 #Button
-startButton = tk.Button(win, text="Check", command=userInput(aktuell, stadt)).pack()
+Button = tk.Button(win, text="Check", command=check).pack()
+
+#Generierung der ersten Aufgabe
+auswahl()
 
 win.mainloop()
