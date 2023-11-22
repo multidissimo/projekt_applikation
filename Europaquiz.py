@@ -1,18 +1,12 @@
-#TODOs
-#Daten Liste vervollständigen
-#Bereits abgefragte, richtige Länder in neue Liste übertragen, um Wiederholungen zu Vermeiden
-#Bereits abgefragte, falsche Länder in neue Liste übertragen und am Ende wiederholen lassen
-#Wenn die "falsche Liste" leer und die "richtige Liste" voll sind, "Gratulation!" oder so anzeigen
-
 import tkinter as tk
 from tkinter import *
 from PIL import ImageTk, Image
 from random import randrange
 
 #Liste mit allen Daten (Kürzel, Name, Hauptstadt)
-daten = [["ch","Schweiz","Bern"],["deu","Deutschland","Berlin"],["be","Belgien","Brüssel"],["SK","Slowakei","Bratislava"],["AT","Österreich","Wien"],["PL","Polen","Warschau"],["CZ","Tschechien","Prag"],["LI","Fürstentum Liechtenstein","Vaduz"],["GB","England","London"],["IE","Irland","Dublin"],["FR","Frankreich","Paris"],["IT","Italien","Rom"],["LU","Luxemburg","Luxemburg"],["NL","Niederlande","Amsterdam"],["DK","Dänemark","Kopenhagen"],["SL","Slowenien","Ljubljana"],["HU","Ungarn","Budapest"],["HR","Kroatien","Zagreb"],["BA","Bosnien und Herzegowina","Sarajevo"],["AL","Albanien","Tirana"],["MK","Nordmazedonien","Skopje"],["ME","Montenegro","Podgorica"],["XK","Kosovo","Pristina"],["RS","Serbien","Belgrad",],["GR","Griechenland","Athen"],["TR","Türkei","Ankara"],["CY","Zypern","Nikosia"],["BG","Bulgarien","Sofia"],["RO","Rumänien","Bukarest"],["MT","Malta","Valletta"],["ES","Spanien","Madrid"],["PT","Portugal","Lissabon"],["AD","Andorra","Andorra la Vella"],["Ru","Russland","Moskau"],["SM","San Marino","San Marino"],["VA","Vatikanstadt","Vatikanstadt"],["EE","Estland","Tallinn"],["LV","Lettland","Riga"],["LT","Litauen","Vilnius"],["IS","Island","Reykjavik"],["NO","Norwegen","Oslo"],["BY","Belarus","Minsk"],["SE","Schweden","Stockholm"],["FI","Finnland","Helsinki"],["MD","Moldawien","Chisinau"]]
+daten = [["ch","Schweiz","Bern"],["de","Deutschland","Berlin"],["be","Belgien","Brüssel"],["SK","Slowakei","Bratislava"],["AT","Österreich","Wien"],["PL","Polen","Warschau"],["CZ","Tschechien","Prag"],["LI","Fürstentum Liechtenstein","Vaduz"],["GB","England","London"],["IE","Irland","Dublin"],["FR","Frankreich","Paris"],["IT","Italien","Rom"],["LU","Luxemburg","Luxemburg"],["NL","Niederlande","Amsterdam"],["DK","Dänemark","Kopenhagen"],["SL","Slowenien","Ljubljana"],["HU","Ungarn","Budapest"],["HR","Kroatien","Zagreb"],["BA","Bosnien und Herzegowina","Sarajevo"],["AL","Albanien","Tirana"],["MK","Nordmazedonien","Skopje"],["ME","Montenegro","Podgorica"],["XK","Kosovo","Pristina"],["RS","Serbien","Belgrad",],["GR","Griechenland","Athen"],["TR","Türkei","Ankara"],["CY","Zypern","Nikosia"],["BG","Bulgarien","Sofia"],["RO","Rumänien","Bukarest"],["MT","Malta","Valletta"],["ES","Spanien","Madrid"],["PT","Portugal","Lissabon"],["AD","Andorra","Andorra la Vella"],["Ru","Russland","Moskau"],["SM","San Marino","San Marino"],["VA","Vatikanstadt","Vatikanstadt"],["EE","Estland","Tallinn"],["LV","Lettland","Riga"],["LT","Litauen","Vilnius"],["IS","Island","Reykjavik"],["NO","Norwegen","Oslo"],["BY","Belarus","Minsk"],["SE","Schweden","Stockholm"],["FI","Finnland","Helsinki"],["MD","Moldawien","Chisinau"]]
 
-#Liste für Speicherung des aktuellen Spielstands
+#Liste für Speicherung des aktuellen Spielstands (grafisch)
 ebenen = []
 
 #Zufällige Auswahl
@@ -33,6 +27,7 @@ def auswahl():
 
 #Überprüfung der Eingabe
 def check():
+    global aktuell
     global ebenen
 
     #Text aus Eingabefeld auslesen
@@ -44,6 +39,7 @@ def check():
     #Überprüfung ob Eingabe korrekt ist (Ja = grüne Ebene / Nein = rote Ebene)
     if p == stadt:
         ebene = Image.open(daten[aktuell][0]+"_g.png").resize((400, 400), Image.LANCZOS)
+        daten.remove(daten[aktuell])        
     else:
         ebene = Image.open(daten[aktuell][0]+"_r.png").resize((400, 400), Image.LANCZOS)
 
@@ -51,7 +47,10 @@ def check():
     ebenen.append(ebene)
 
     #Neue Aufgabe generieren
-    auswahl()
+    if daten:
+        auswahl()
+    else:
+        print("Fertig")
 
     #Kontrollen
     print(p)
