@@ -10,7 +10,7 @@ from PIL import ImageTk, Image
 from random import randrange
 
 #Liste mit allen Daten (Kürzel, Name, Hauptstadt)
-daten = [["ch","Schweiz","Bern"],["deu","Deutschland","Berlin"],["be","Belgien","Brüssel"],["SK","Slowakei","Bratislava"],["AT","Österreich","Wien"],["PL","Polen","Warschau"],["CZ","Tschechien","Prag"],["LI","Fürstentum Liechtenstein","Vaduz"],["GB","England","London"],["IE","Irland","Dublin"],["FR","Frankreich","Paris"],["IT","Italien","Rom"],["LU","Luxemburg","Luxemburg"],["NL","Niederlande","Amsterdam"],["DK","Dänemark","Kopenhagen"],["SL","Slowenien","Ljubljana"],["HU","Ungarn","Budapest"],["HR","Kroatien","Zagreb"],["BA","Bosnien und Herzegowina","Sarajevo"],["AL","Albanien","Tirana"],["MK","Nordmazedonien","Skopje"],["ME","Montenegro","Podgorica"],["XK","Kosovo","Pristina"],["RS","Serbien","Belgrad",],["GR","Griechenland","Athen"],["TR","Türkei","Ankara"],["CY","Zypern","Nikosia"],["BG","Bulgarien","Sofia"],["RO","Rumänien","Bukarest"],["MT","Malta","Valletta"],["ES","Spanien","Madrid"],["PT","Portugal","Lissabon"],["AD","Andorra","Andorra la Vella"],["Ru","Russland","Moskau"],["SM","San Marino","San Marino"]["VA","Vatikanstadt","Vatikanstadt"],["EE","Estland","Tallinn"],["LV","Lettland","Riga"]["LT","Litauen","Vilnius"],["IS","Island","Reykjavik"],["NO","Norwegen","Oslo"],["BY","Belarus","Minsk"],["SE","Schweden","Stockholm"],["FI","Finnland","Helsinki"],["MD","Moldawien","Chisinau"]]
+daten = [["ch","Schweiz","Bern"],["deu","Deutschland","Berlin"],["be","Belgien","Brüssel"],["SK","Slowakei","Bratislava"],["AT","Österreich","Wien"],["PL","Polen","Warschau"],["CZ","Tschechien","Prag"],["LI","Fürstentum Liechtenstein","Vaduz"],["GB","England","London"],["IE","Irland","Dublin"],["FR","Frankreich","Paris"],["IT","Italien","Rom"],["LU","Luxemburg","Luxemburg"],["NL","Niederlande","Amsterdam"],["DK","Dänemark","Kopenhagen"],["SL","Slowenien","Ljubljana"],["HU","Ungarn","Budapest"],["HR","Kroatien","Zagreb"],["BA","Bosnien und Herzegowina","Sarajevo"],["AL","Albanien","Tirana"],["MK","Nordmazedonien","Skopje"],["ME","Montenegro","Podgorica"],["XK","Kosovo","Pristina"],["RS","Serbien","Belgrad",],["GR","Griechenland","Athen"],["TR","Türkei","Ankara"],["CY","Zypern","Nikosia"],["BG","Bulgarien","Sofia"],["RO","Rumänien","Bukarest"],["MT","Malta","Valletta"],["ES","Spanien","Madrid"],["PT","Portugal","Lissabon"],["AD","Andorra","Andorra la Vella"],["Ru","Russland","Moskau"],["SM","San Marino","San Marino"],["VA","Vatikanstadt","Vatikanstadt"],["EE","Estland","Tallinn"],["LV","Lettland","Riga"],["LT","Litauen","Vilnius"],["IS","Island","Reykjavik"],["NO","Norwegen","Oslo"],["BY","Belarus","Minsk"],["SE","Schweden","Stockholm"],["FI","Finnland","Helsinki"],["MD","Moldawien","Chisinau"]]
 
 #Liste für Speicherung des aktuellen Spielstands
 ebenen = []
@@ -37,6 +37,7 @@ def check():
 
     #Text aus Eingabefeld auslesen
     p = entry.get()
+    entry.delete(0, END)
     #Lösung aus Liste auslesen
     stadt = daten[aktuell][2]
 
@@ -80,6 +81,7 @@ frage.pack()
 
 #Eingabefeld
 entry = Entry(win, width=30)
+entry.bind("<Return>", lambda event=None: check())
 entry.place(relx=.5, rely=.1, anchor=CENTER)
 
 #Label für das Bild
