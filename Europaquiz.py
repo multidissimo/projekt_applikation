@@ -30,8 +30,9 @@ def check():
     global aktuell
     global ebenen
 
-    #Text aus Eingabefeld auslesen
+    #Text aus Eingabefeld lesen
     p = entry.get()
+    #Textfeld leeren
     entry.delete(0, END)
     #Lösung aus Liste auslesen
     stadt = daten[aktuell][2]
@@ -39,22 +40,19 @@ def check():
     #Überprüfung ob Eingabe korrekt ist (Ja = grüne Ebene / Nein = rote Ebene)
     if p == stadt:
         ebene = Image.open(daten[aktuell][0]+"_g.png").resize((400, 400), Image.LANCZOS)
+        #Eintrag aus Liste entfernen, damit dieser nicht wiederholt wird
         daten.remove(daten[aktuell])        
     else:
         ebene = Image.open(daten[aktuell][0]+"_r.png").resize((400, 400), Image.LANCZOS)
 
-    #Ebene in Liste speichern
+    #Farbebene in Liste speichern
     ebenen.append(ebene)
 
-    #Neue Aufgabe generieren
+    #Neue Aufgabe generieren, falls noch Länder fehlen, ansonsten beenden
     if daten:
         auswahl()
     else:
         print("Fertig")
-
-    #Kontrollen
-    print(p)
-    print(ebenen)
 
 #Spielstand aktualisieren
 def update():
@@ -66,8 +64,6 @@ def update():
 
     #Übereinandergelegtes Bild zurückgeben
     return spielstand
-
-#Grundfunktionen / Setup
 
 #Fenster
 win = Tk()
